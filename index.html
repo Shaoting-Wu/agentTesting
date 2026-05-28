@@ -10,11 +10,11 @@
   <p id="status">Loading chat...</p>
 
   <script type='text/javascript'>
-    // Read URL parameters
+    // Read URL parameters (case-insensitive fallback)
     const urlParams    = new URLSearchParams(window.location.search);
-    const nhc_Id       = urlParams.get('nhc_Id')       || '';
-    const nhc_name     = urlParams.get('nhc_name')     || '';
-    const nhc_division = urlParams.get('nhc_division') || '';
+    const nhc_Id       = urlParams.get('nhc_Id')       || urlParams.get('nhc_id')       || '';
+    const nhc_name     = urlParams.get('nhc_name')     || urlParams.get('nhc_Name')     || '';
+    const nhc_division = urlParams.get('nhc_division') || urlParams.get('nhc_Division') || '';
 
     // Show values on page for debugging
     document.getElementById('status').innerText =
