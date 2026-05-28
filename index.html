@@ -7,26 +7,49 @@
 <body>
   <h1>Agentforce Chat Test</h1>
 
+  <p id="status">Loading chat...</p>
+
   <script type='text/javascript'>
-	function initEmbeddedMessaging() {
-		try {
-			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
+    // Read URL parameters
+    const urlParams    = new URLSearchParams(window.location.search);
+    const nhc_Id       = urlParams.get('nhc_Id')       || '';
+    const nhc_name     = urlParams.get('nhc_name')     || '';
+    const nhc_division = urlParams.get('nhc_division') || '';
 
-			embeddedservice_bootstrap.init(
-				'00DD7000000OAER',
-				'Donna_test',
-				'https://len--afdev.sandbox.my.site.com/ESWDonnatest1779841655061',
-				{
-					scrt2URL: 'https://len--afdev.sandbox.my.salesforce-scrt.com'
-				}
-			);
-		} catch (err) {
-			console.error('Error loading Embedded Messaging: ', err);
-		}
-	};
-</script>
-<script type='text/javascript' src='https://len--afdev.sandbox.my.site.com/ESWDonnatest1779841655061/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+    // Show values on page for debugging
+    document.getElementById('status').innerText =
+      `ID: ${nhc_Id} | Name: ${nhc_name} | Division: ${nhc_division}`;
 
+    function initEmbeddedMessaging() {
+      try {
+        embeddedservice_bootstrap.settings.language = 'en_US';
+
+        embeddedservice_bootstrap.init(
+          '00DD7000000OAER',
+          'Donna_test',
+          'https://len--afdev.sandbox.my.site.com/ESWDonnatest1779841655061',
+          {
+            scrt2URL: 'https://len--afdev.sandbox.my.salesforce-scrt.com'
+          }
+        );
+
+        window.addEventListener('onEmbeddedMessagingReady', () => {
+          embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
+            "nhc_Id":       nhc_Id,
+            "nhc_name":     nhc_name,
+            "nhc_division": nhc_division
+          });
+        });
+
+      } catch (err) {
+        console.error('Error loading Embedded Messaging: ', err);
+      }
+    };
+  </script>
+  <script type='text/javascript'
+    src='https://len--afdev.sandbox.my.site.com/ESWDonnatest1779841655061/assets/js/bootstrap.min.js'
+    onload='initEmbeddedMessaging()'>
+  </script>
 
 </body>
 </html>
