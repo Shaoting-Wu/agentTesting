@@ -17,7 +17,7 @@
     const nhc_division = urlParams.get('nhc_division') || urlParams.get('nhc_Division') || '';
 
     // Show values on page for debugging
-    document.getElementByid('status').innerText =
+    document.getElementById('status').innerText =
       `id: ${nhc_id} | Name: ${nhc_name} | Division: ${nhc_division}`;
 
     function initEmbeddedMessaging() {
